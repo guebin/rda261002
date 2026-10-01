@@ -1,0 +1,9 @@
+/.quarto/
+
+**/*.quarto_ipynb
+.DS_Store
+
+# Video files
+*.mov
+movs/
+docs/movs/

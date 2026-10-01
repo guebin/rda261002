@@ -1,0 +1,11 @@
+project:
+  type: website
+  output-dir: docs
+  render:
+    - 1002.ipynb
+    - hands-on.ipynb
+bibliography: ref.bib
+csl: ieee.csl
+format:
+  revealjs:
+    theme: default
