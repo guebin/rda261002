@@ -1,0 +1,24 @@
+<script>
+document.addEventListener('DOMContentLoaded', function() {
+  // video-js 초기화 후 스타일 강제 적용
+  setTimeout(function() {
+    // 모든 video-js 컨테이너 가운데 정렬
+    document.querySelectorAll('.video-js').forEach(function(el) {
+      el.style.display = 'block';
+      el.style.marginLeft = 'auto';
+      el.style.marginRight = 'auto';
+    });
+    // 내부 video 요소 가운데 정렬
+    document.querySelectorAll('.vjs-tech').forEach(function(el) {
+      el.style.objectFit = 'contain';
+      el.style.objectPosition = 'center center';
+    });
+    // 플레이 버튼 가운데
+    document.querySelectorAll('.vjs-big-play-button').forEach(function(el) {
+      el.style.top = '50%';
+      el.style.left = '50%';
+      el.style.transform = 'translate(-50%, -50%)';
+    });
+  }, 500);
+});
+</script>

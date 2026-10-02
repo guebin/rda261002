@@ -1,0 +1,758 @@
+---
+title: "에이전틱 AI를 이용한 파이썬 실무"
+subtitle: "농촌진흥청 신규연구사 교육과정 · 생성형 AI 이용 파이썬 실무·실습"
+bibliography: ref.bib
+author: "최규빈"
+institute: "전북대학교 통계학과"
+date: "10/02/2026"
+title-block-style: default
+title-block-banner: true
+csl: ieee.csl
+---
+
+## 강사소개
+
+**최규빈** | 전북대학교 통계학과
+
+- Email: guebin@jbnu.ac.kr
+- Phone: (+82) 63-270-3387
+- YouTube: <https://www.youtube.com/channel/UCQk9RyBNgXc7ORIsYlOfQrg>
+
+## 학습목표
+
+이 강의를 마치면 다음을 할 수 있습니다.
+
+1. 생성형 AI와 에이전틱 AI의 차이를 "묻기"와 "시키기"로 설명할 수 있다.
+2. RAG, 바이브코딩, MCP, 에이전틱 코딩의 뜻을 실제 도구(ChatGPT, Claude Code, Gemini CLI)와 연결해 말할 수 있다.
+3. 무료 도구(Colab, Gemini)로 파일 정리·데이터 요약 같은 일을 AI에게 시키고 그 결과를 검증할 수 있다.
+4. AI 결과물의 환각과 보안 유의점을 점검할 수 있다.
+
+## 목차
+
+1. Intro: 도구의 진화
+2. 오른쪽 길 -- 생성형 AI에서 에이전틱 AI까지
+3. 왼쪽 길 -- 그래도 코딩은 배워야 하는가
+4. 실습 -- 에이전틱 AI 워크플로우
+5. 마무리하며
+
+# Intro: 도구의 진화
+
+## Hidden Figures
+
+![Figure: Hidden Figures, An incredible & inspiring untold true story about three women at NASA who were instrumental in one of history's greatest operations – the launch of astronaut John Glenn into orbit. [@disneyplus_hiddenfigures]](figs/HiddenFigures.png)
+
+## Hidden Figures
+
+영화리뷰: <https://www.youtube.com/watch?v=6EFhm1mONX8>
+
+## Hidden Figures
+
+![Figure: 히든피겨스에 달린 댓글들](figs/comments.png)
+
+## 주산
+
+![Figure: 주판 (이미지출처: 구글 제미나이)](figs/주판.png)
+
+## 주산
+
+- 전설의 암산왕: <https://www.youtube.com/watch?v=RQnn_vOwmNU>
+
+- 1950년 6·25 전쟁 이후 국가 정책 차원에서 주산 교육이 상업교육 과정에 도입되었으며, 1960년대에는 초등학교로까지 확대 보급되었다. 이 시기에는 7급부터 1급까지의 주산 급수 제도가 운영되었고, 교육부와 대한상공회의소가 주관하는 주산능력검정시험이 시행되면서 주산의 위상은 더욱 강화되었다. 그러나 1980년대 후반 전자계산기가 빠르게 보급되면서 주산 교육은 급속히 쇠퇴하였다. 결국 1991년에는 주산능력검정시험마저 폐지되었고, 이후 7차 교육과정부터는 수학 교과서에서 주산 교육이 완전히 사라지게 되었다. [@김정옥2017주산의]
+
+## 기술은 인재의 기준을 바꾼다
+
+| 구분                  | 기술 등장 전 인재 정의                  | 기술 등장 후 인재 정의                          |
+|-----------------------|---------------------------------------|---------------------------------------------|
+| **수학** | 계산을 정확하고 빠르게 하는 사람    | 계산도구(=컴퓨터)를 활용한 문제해결과 응용에 강한 사람 |
+| **프로그래밍** | 코드를 직접 작성하고 디버깅할 수 있는 사람 | AI를 활용해 아이디어를 빠르게 구현·검증하고 창의적 문제 해결에 집중하는 사람^[이라고 하는데 사실 저도 잘 모르겠습니다] |
+
+- 새로운 기술은 인재의 기준을 바꾼다. 계산기의 등장은 암산 능력을 최고라 여기던 시대를 끝냈다.
+- GPT의 등장은 코더에게 어떤 의미일까?
+
+## AI 물결 속에 파이썬 공부를 해야 할까?
+
+![Figure: 우리는 왼쪽으로 가야하는가? 아니면 오른쪽으로 가야하는가? (이미지출처: 구글 제미나이)](figs/파이썬공부가필요할까.png)
+
+# 오른쪽 길
+
+## 2025년 여름, 어떤 카페에서
+
+![Figure: AI의 원리를 파고들던 시절과 AI를 도구로 쓰는 지금](figs/AI와수학.png)
+
+## 인공지능
+
+<iframe width="900" height="500" src="https://www.youtube-nocookie.com/embed/y7JUEhe0OfY" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
+
+::: aside
+80~90년대 가전제품 광고: '인공지능'이라는 단어를 처음 접한 계기 [@cfchannel_ai_8090]
+:::
+
+## 인공지능
+
+'인공지능'이라는 단어는 **당시 기술로는 설명하기 어렵지만, 인간처럼 똑똑하게 행동하는 무언가**를 지칭하는 그릇
+
+![Figure: 시대별로 변화해 온 인공지능(AI)의 의미 (이미지: Gemini 생성)](figs/AI의미.png)
+
+## 생성형 AI 혁명 타임라인
+
+### 2022년: 혁명의 시작
+
+- 2022년 11월
+    - ChatGPT 출시
+- 2022년 12월
+    - Perplexity 출시
+        - 인용 정보를 제공 [@towardsai_perplexity]
+
+## 생성형 AI 혁명 타임라인
+
+### 2023년: 경쟁과 다양화
+
+- 2023년 2월
+    - Google Bard 발표 [@nytimes_google_bard]
+        - ChatGPT 대항마로 발표
+        - 오류로 주가 급락 [@seoul_news_20230210; @chosun_google_bard_stock_drop_2023]
+- 2023년 3월
+    - GPT-4 출시 [@wikipedia_gpt4]
+        - 멀티모달 능력 (텍스트+이미지) 첫 도입
+    - Claude 1.0 출시 [@wikipedia_claude_language_model]
+    - Cursor AI 출시 [@bytebytego_cursor_billions] // [살펴보기](https://www.youtube.com/watch?v=CF4Fb9vkrik)
+        - VS Code 기반 AI 코딩 어시스턴트
+
+## 생성형 AI 혁명 타임라인
+
+- 2023년 7월
+    - DeepSeek 설립 [@wikipedia_deepseek]
+        - 중국 항저우, High-Flyer 헤지펀드가 창립
+    - Claude 2 출시 [@wikipedia_claude_language_model]
+- 2023년 12월
+    - Google Gemini 1.0 발표 [@cnn_google_gemini_launch_2023]
+
+## 생성형 AI 혁명 타임라인
+
+### 2024년: 멀티모달과 도구의 폭발
+
+- 2024년 2월
+    - OpenAI Sora 데모 공개 [@retrofuturista_sora]
+- 2024년 3월
+    - Google Gemini 1.5 Pro 발표 [@google_gemini25_thinking_model]
+    - Claude 3 (Opus, Sonnet, Haiku) 출시 [@wikipedia_claude_language_model]
+- 2024년 5월
+    - GPT-4o 출시 [@wikipedia_gpt4o]
+        - 텍스트 + 이미지 + 음성 지원
+- 2024년 6월
+    - Claude 3.5 Sonnet + Artifacts 출시 [@wikipedia_claude_language_model] // [살펴보기1](https://claude.ai/public/artifacts/45d84b3f-3e51-4297-bcfb-277e98679d94), [살펴보기2](https://guebin.github.io/DL2025/posts/14wk-1.html)
+
+## 생성형 AI 혁명 타임라인
+
+- 2024년 7월
+    - SearchGPT (ChatGPT Search) [@wikipedia_chatgpt_search]
+        - 이제 ChatGPT 역시 RAG 도입!
+- 2024년 9월
+    - OpenAI o1 추론 모델 출시 [@wikipedia_openai_o1]
+        - "생각하는 AI", 수학에서 PhD 수준
+- 2024년 11월
+    - Windsurf 출시 (Cursor AI와 경쟁) [@webwire_windsurf_editor_launch]
+    - MCP 출시 (Anthropic이 오픈소스로 공개) [@anthropic_mcp_open_source] // [살펴보기](https://www.youtube.com/shorts/XPACEy2JlOk)
+        - AI 시스템과 외부 데이터 소스 연결의 표준 프로토콜
+        - "AI의 USB-C" - 통합 인터페이스로 N×M 통합 문제 해결
+        - Claude Desktop에서 첫 지원, Google Drive, Slack, GitHub 등 서버 제공
+
+## 생성형 AI 혁명 타임라인
+
+### 2025년: 에이전트 시대와 글로벌 경쟁
+
+- 2025년 1월
+    - DeepSeek-R1 출시 - "AI의 스푸트니크 순간" [@fortune_deepseek_sputnik]
+        - 600만 달러로 OpenAI o1과 동등 성능 달성 [@guo2025deepseek; @huggingface_deepseek_r1]
+        - 앱이 며칠 만에 ChatGPT 제치고 미국 App Store 1위
+        - MIT 라이선스 완전 오픈소스, API 96% 저렴 [@techcrunch_deepseek_o1_benchmarks_2025]
+        - Nvidia 주가 18% 급락, 미국 빅테크 동반 하락 [@bi_deepseek_nvidia_selloff_2025]
+
+## 생성형 AI 혁명 타임라인
+
+- 2025년 2월
+    - NotebookLM Plus 개인 사용자에게 개방 [@wikipedia_notebooklm]
+        - 문서를 팟캐스트로 변환, 대학생들에게 인기 [@joongang_notebooklm_2025]
+    - Claude 3.7 Sonnet + Claude Code 연구 프리뷰 [@anthropic_claude_code_preview]
+    - 바이브코딩(Vibe Coding 용어 등장) [@wikipedia_vibe_coding]
+        - AI와의 직관적이고 대화형 협업 방식을 지칭하는 개념 최초 제시
+        - 전통적 코딩에서 자연어 기반 창작으로의 패러다임 전환 정의
+        - 세간에서 꽤나 화제를 모으며 개발자 커뮤니티 전반에 확산
+
+## 생성형 AI 혁명 타임라인
+
+- 2025년 5월
+    - Claude Code 정식 출시 [@anthropic_claude_code_overview]
+        - 터미널 기반 AI 에이전트 프로그래밍
+        - 에이전트형 코딩의 시대 본격화
+- 2025년 6월
+    - Google Gemini CLI 출시 [@scienceinsight_gemini_cli_intro]
+        - 에이전트형 코딩 진영 강화: 자율적 다단계 작업 수행
+        - Google의 Claude Code 대항마
+- 2025년 7월
+    - Perplexity Comet 브라우저 출시 [@perplexity_comet_launch] // [살펴보기](https://www.youtube.com/watch?v=o9Cnk2k4zRg&t=821s)
+
+## 최근 흐름 (1) — 2025년 8월 이후
+
+::: {style="font-size: 0.82em"}
+`-` 작년 이 자리에서는 클로드코드(2025.05)와 제미나이 CLI(2025.06)까지 말씀드렸습니다. 그 뒤 1년:
+
+- **모델** — GPT-5(25.08) [@openai_gpt5_2025] $\to$ Gemini 3 · Claude Opus 4.5(25.11) [@techcrunch_gemini3_2025; @anthropic_opus45_2025] $\to$ GPT-5.5(26.04) [@openai_gpt55_2026] $\to$ Claude Fable 5 · Mythos 5(26.06) [@anthropic_fable5_2026] $\to$ Claude Opus 5 · GPT-5.6(26.07) [@anthropic_opus5_2026; @engadget_gpt56_2026] $\to$ Claude Fable 5.1(26.09) [@macrumors_fable51_2026]
+    - 경쟁축이 "성능"에서 **"등급과 접근권"**으로: Mythos급은 승인 기관만 쓰고, 미국은 출시 전 정부 검토(26.06 행정명령)와 수출통제(Fable 5, 26.06.12~06.30, 07.01 복귀)까지 걸었다 [@skadden_eo_2026; @anthropic_redeploy_fable5_2026]
+- **에이전트** — Agent Skills(25.10) [@thenewstack_agent_skills_2025] · GitHub Agent HQ(25.10) [@github_agent_hq_2025] · Claude Code Agent Teams(26.02) [@anthropic_agent_teams_2026] · 카파시 "바이브코딩은 지났다, 에이전틱 엔지니어링"(26.04) [@karpathy_sequoia_2026]
+:::
+
+## 최근 흐름 (1) — 2025년 8월 이후, 계속
+
+::: {style="font-size: 0.82em"}
+- **표준** — MCP · AGENTS.md가 리눅스재단 AAIF로(25.12) [@linuxfoundation_aaif_2025] · Agent Plugins 1.0(26.08, OpenAI·구글·아마존·Vercel) [@cybernews_agent_plugins_2026]
+- **IDE 밖으로** — ChatGPT Atlas 브라우저(25.10) [@openai_atlas_2025] $\to$ 9개월 만에 종료, ChatGPT 앱·크롬 확장으로(26.07) [@techcrunch_atlas_shutdown_2026] · 크롬 자동 브라우징(26.05) [@google_io_2026] · OpenClaw 열풍과 보안 사고(26.01) [@conscia_openclaw_2026]
+- **한국** — 독자 AI 파운데이션 모델 3사 진출(26.08) [@korea_kr_kfm_2026] · 애플 시리가 Gemini로(26.01) [@google_apple_joint_2026]
+:::
+
+## 최근 흐름 (2) — 네 가지 엔지니어링, 아주 간단히
+
+`-` 사람이 설계하는 것이 점점 커집니다.
+
+- **프롬프트 엔지니어링** (2023~) — 질문 한 번을 잘 쓰기. 역할·예시·출력 형식.
+- **컨텍스트 엔지니어링** (2025.06~) — 모델이 보는 것 전체를 설계하기. 문서·검색 결과·도구 출력·대화 기록 중 무엇을 문맥 창에 넣을지 [@simonwillison_context_engineering_2025]
+- **하네스 엔지니어링** (2026~) — 에이전트가 일하는 환경을 설계하기. 도구·권한·샌드박스·규칙 파일(CLAUDE.md, AGENTS.md)·스킬. 같은 모델도 하네스가 다르면 결과가 다르다 [@openai_harness_engineering_2026]
+- **루프 엔지니어링** — 반복과 검증을 설계하기. 계획$\to$실행$\to$검증$\to$수정을 어떻게 돌리고 언제 사람이 확인할지. 에이전트 팀·예약 실행·결재 회차^[굳어진 용어라기보다 이 강의의 정리입니다.]
+
+`-` 묻기 $\to$ 보여 주기 $\to$ 일터 만들기 $\to$ 돌리기. 뒤로 갈수록 프롬프트 한 줄보다 **문서·규칙·검증 절차**가 결과를 좌우합니다.
+
+## 최근 흐름 (3) — 로컬 LLM, 내 컴퓨터에서 도는 모델
+
+`-` 프런티어 모델이 등급과 수출통제로 닫히는 동안, 열린 쪽도 같이 커졌습니다.
+
+- 2025년 8월 OpenAI가 GPT-2 이후 처음으로 가중치 공개 모델 **gpt-oss**(120b·20b, Apache 2.0)를 냄. 20b는 메모리 16GB 노트북에서 돈다 [@openai_gptoss_2025]
+- 2026년 상반기 공개 가중치 모델이 쏟아짐 — DeepSeek V4, Qwen 3.6, Kimi K3, GLM-5.2, Gemma 4 … 문맥 100만 토큰, 전문가 혼합(MoE)으로 "큰 모델을 조금만 켜서" 돌린다 [@raschka_openweight_2026; @hf_openllm_2026]
+- 도구 — Ollama · LM Studio: 명령 한 줄로 내려받아 실행. 데이터가 밖으로 나가지 않는다
+- 한국 — 독자 AI 파운데이션 모델: K-EXAONE 2.0(LG AI연구원), A.X K2(SKT), Solar Open2(업스테이지) [@korea_kr_kfm_2026]
+- 연구기관에 왜 중요한가 — **보안**(내부 자료·개인정보를 밖에 안 보냄), **비용**(사용량 과금 없음). 대가는 프런티어보다 뒤지는 성능과 장비(GPU·메모리)
+
+## 생성형 AI 혁명 타임라인
+
+### 주관적으로 정리해본 주요 사건
+
+- 2022.11: ChatGPT로 생성형 AI 대중화 시작
+- 2022.12: Perplexity, RAG 기술 활용
+- 2024.09: o1 추론 모델 출시
+- 2024.11: MCP의 등장
+- 2025.01: DeepSeek-R1 출시
+- 2025.02: "바이브코딩" 등장 (카파시)
+- 2025.05: 클로드코드 출시
+- 2025.08: GPT-5 — 추론 모델의 대중화
+- 2025.10: Codex 정식 출시 [@openai_codex_ga_2025] — 에이전틱 AI 3파전 (Codex vs Claude Code vs Gemini CLI)
+- 2025.12: MCP, 리눅스재단으로 — 표준의 확정
+- 2026.02: 멀티에이전트 (Claude Code Agent Teams)
+- 2026.04: "바이브코딩은 지났다" — 에이전틱 엔지니어링 (카파시)
+- 2026.06: Mythos급 등장, AI 모델에 첫 수출통제
+- 2026.08: Agent Plugins — 회사를 넘는 에이전트 확장 규격
+
+## 생성형 AI 혁명 타임라인
+
+### 주요 경쟁 구도 (2026년 9월 기준)
+
+- 모델: ChatGPT(GPT-5.6) vs Claude(Fable 5.1 · Opus 5 · Sonnet 5) vs Gemini(3.5 · Omni) [@engadget_gpt56_2026; @macrumors_fable51_2026; @google_io_2026]
+- 에이전틱 AI: Codex vs Claude Code vs Gemini CLI
+- 통합개발환경: Cursor vs Antigravity [@humai_google_antigravity_2025] vs Positron (VS Code도 여전히 건재)
+- 브라우저 에이전트: 크롬 자동 브라우징, ChatGPT 앱·크롬 확장(Atlas 종료), Claude for Chrome, Perplexity Comet
+- 표준: MCP · AGENTS.md (리눅스재단), Skills, Agent Plugins
+- 한국: 독자 AI 파운데이션 모델 — 업스테이지 · SKT · LG AI연구원
+- 기타: NotebookLM (문서$\to$팟캐스트), Gemini for Workspace, 이미지·영상 생성(나노바나나, Sora 2, Gemini Omni) [@google_aistudio_nanobanana_2025; @openai_sora2_2025]
+
+## 주요개념 - RAG
+
+- Retrieval-Augmented Generation, 줄여서 RAG는 AI 언어 모델이 외부 지식 기반을 참조하여 답변을 생성하는 구조
+- 전통적인 LLM은 학습된 데이터만을 기반으로 응답하지만 RAG는 (1) 질의에 관련된 정보를 외부 문서나 데이터베이스에서 가져오고 (2) 검색된 정보를 바탕으로 답변을 생성.
+- 효과: 정확도 향상 (외부사실에 기반하므로 환각문제 최소화), 최신성 확보 (학습 이후 업데이트된 정보도 실시간 반영가능), 특정분야 대응성 강화 (기업문서나 전문 도메인자료를 응답에 활용할 수 있음.)
+
+## 주요개념 - RAG
+
+| 구분            | 내용                                                                 |
+|-----------------|----------------------------------------------------------------------|
+| **RAG 이전**     | - 모델은 학습된 파라미터 안에서만 답변 가능<br>- 최신 정보 반영 어려움 <br>- 특정 도메인 전문 지식 부족<br>- "죄송하지만 2021년 9월 이후의 데이터는 모릅니다."라는 한계 |
+| **RAG 이후**     | - "내가 올린 문서에서 관련 부분 찾아 요약해줘"<br>→ 벡터DB에서 검색 후 LLM이 결합해 답변<br><br>- "최신 논문 내용을 반영해 설명해줘"<br>→ 외부 지식베이스 + 모델 결합으로 최신성 확보<br><br>- "우리 회사 데이터 기준으로 리포트 작성해줘"<br>→ 사내 문서/DB 연동해 맞춤형 응답 생성 |
+
+## 주요개념 - 바이브코딩
+
+![Figure: 바이브코딩이 탄생한 첫 트윗 [@lees_designinsight_2025]](figs/바이브코딩.jpg)
+
+## 주요개념 - 바이브코딩
+
+- Andrej Karpathy가 2025년 2월에 대중화한 인공지능 지원 소프트웨어 개발 기술
+- 개발자가 프로젝트나 작업을 대규모 언어 모델(LLM)에 설명하면, LLM은 프롬프트를 기반으로 코드를 생성
+- 개발자는 코드를 검토하거나 수정하지 않고, 도구와 실행 결과만을 사용하여 코드를 평가하고 LLM에 개선 사항을 요청
+- 바이브 코딩 옹호자들은 이를 통해 아마추어 프로그래머조차도 소프트웨어 엔지니어링에 필요한 광범위한 교육과 기술 없이 소프트웨어를 생산할 수 있다고 말함
+- 그런데 2026년 4월, 카파시 본인이 "바이브코딩은 지났다"고 선언 — 명세를 쓰고, 계획을 감독하고, diff를 읽고, 테스트를 짜는 **에이전틱 엔지니어링**으로 [@karpathy_sequoia_2026]
+
+*Examples*
+
+- <https://www.youtube.com/shorts/cOM_iR1wsQ8>
+- <https://www.youtube.com/shorts/CFvpagumlv0>
+
+## 주요개념 - MCP
+
+- Model Context Protocol (MCP)은 AI 어시스턴트가 외부 데이터 소스와 도구에 안전하고 통제된 방식으로 접근할 수 있도록 하는 개방형 표준 프로토콜을 의미.
+- MCP는 AI 모델과 외부 시스템 간의 표준화된 인터페이스를 제공. 이를 통해 AI는 파일 시스템, 데이터베이스, 웹 API, 비즈니스 시스템 등 다양한 컨텍스트 소스에 접근할 수 있음.
+- 2025년 12월 Anthropic이 MCP를 리눅스재단(Agentic AI Foundation)에 기부. OpenAI·구글·MS·AWS가 회원으로 참여해 사실상 표준이 됨 [@linuxfoundation_aaif_2025]
+
+*Examples*
+
+<https://www.youtube.com/shorts/XPACEy2JlOk>
+
+## 주요개념 - MCP
+
+| 구분            | 내용                                                                 |
+|-----------------|----------------------------------------------------------------------|
+| **MCP 이전** | - ChatGPT: "저는 당신의 이메일을 볼 수 없어서..."<br>- Claude: "제가 당신의 캘린더에 접근할 수 없어서..."<br>- Gemini: "죄송하지만 개인 파일은 확인할 수 없습니다..." |
+| **MCP 이후**       | - "지난 3개월간 가장 중요했던 이메일 10개 요약해줘"<br>→ Gmail MCP 서버가 실제 이메일 데이터 분석<br><br>- "내일 회의 준비를 위해 관련 문서들 정리해줘"<br>→ Calendar + Drive + Slack MCP가 연동되어 완벽한 브리핑 생성<br><br>- "이번 프로젝트 진행상황을 팀에게 보고서로 만들어줘"<br>→ Jira + GitHub + 내 작업 로그를 종합한 자동 리포트 |
+
+## 주요개념 - Agentic Coding
+
+- 에이전틱 코딩은 AI 에이전트가 자율적으로 코딩 작업을 수행하는 패러다임. 단순히 코드 생성을 넘어서, 계획 수립부터 실행, 테스트, 디버깅까지 전체 개발 과정을 AI가 주도적으로 처리.
+- ChatGPT에게는 답을 물어볼 수 있고, Claude Code에게는 일을 시킬 수 있다.
+
+## 주요개념 - Agentic Coding
+
+![Figure: 바이브코딩과 에이전틱 코딩의 차이점 [@sapkota2025vibe]](figs/AgenticCoding.png)
+
+## 주요개념 - Agentic AI
+
+에이전틱 AI 시대가 왔다면, 배워서 쓰면 되지 않을까? --- 생각보다 단순하지 않다.
+
+![Figure: AI를 '묻는 도구'로 쓰는 것과 '직접 운전하는 엔진'으로 다루는 것의 차이 (이미지: Gemini 생성)](figs/생성형AIvs에이전틱AI.png)
+
+## 주요개념 - Agentic AI
+
+왜 활용하기 어려운가?
+
+- 정보 과잉: 알아야 할 개념이 너무 많고 다양함 (MCP, RAG, 에이전틱 AI, 가상환경 $\dots$) — 나에게 필요한 흐름을 잡기 어려움
+- 최적화의 어려움: 엑셀도 써야 하고, 파이썬도 써야 하고, R도 써야 하고… 이 모든 것을 적당히 아우르는 환경을 구축하는 것이 쉽지 않음
+- 상상력의 부족: 에이전틱 AI로 무엇을 할 수 있는지 감을 잡기 어려움
+
+> AI 개발 환경과 생태계를 이해하고, 나에게 필요한 환경만 세팅하는 것도 하나의 역량이라고 생각합니다.
+
+## 오른쪽 길을 마치며
+
+- 가장 인기 있는 새로운 프로그래밍 언어는 영어 (Andrej Karpathy)
+
+# 왼쪽 길
+
+## 바이브코딩에 대한 비판
+
+- Programmer Simon Willison (바이브코딩 옹호자) said:
+
+> "If an LLM wrote every line of your code, but you've reviewed, tested, and understood it all, that's not vibe coding in my book—that's using an LLM as a typing assistant."
+
+- 저의 생각(2025년): 아무리 바이브 코딩이 좋다고 해도 사이먼 윌리슨의 발언은 좀 과하지 않나??
+- 1년 뒤(2026년 4월), 카파시 본인이 같은 말을 했다 — "바이브코딩은 지났다, 에이전틱 엔지니어링" [@karpathy_sequoia_2026]
+
+## 바이브코딩의 한계
+
+*Examples*
+
+- <https://www.youtube.com/shorts/NXIIqHXWsTk>
+- <https://www.youtube.com/shorts/KzewB6tX8p8>
+
+## Francis Geng의 연구
+
+- Francis Geng 연구팀은 "바이브 코딩(Vibe Coding)"이라는 새로운 프로그래밍 워크플로우에서 학생들이 AI 도구와 어떻게 상호작용하는지, 그리고 이러한 상호작용이 프로그래밍 경험 수준에 따라 어떻게 다른지 조사하였음 [@geng2025exploring]
+- 실험설계: 연구에는 **북미 연구 중심 대학의 두 컴퓨터 과학 강좌에서 모집된 총 19명의 학생**이 참여했음: 초급 프로그래밍(CS1) 과정 학생 9명과 고급 소프트웨어 공학(SWE) 과정 학생 10명. 모든 참가자는 브라우저 기반 AI 통합 IDE인 **Replit 플랫폼을 사용하여 개인 예산 관리 웹 애플리케이션을 구축하는 개방형 과제**를 수행.
+
+## Francis Geng의 연구
+
+**발견1**: 학생들은 대부분의 시간을 AI가 만든 프로토타입을 테스트하는데 사용함.
+
+![Figure: 학생들의 사용시간을 시각화한 도넛 차트](figs/Geng_donut.png)
+
+## Francis Geng의 연구
+
+- 학생들이 가장 많이 한 활동은 프로토타입 상호작용(64%)임. 즉, "내가 만든 앱이 제대로 돌아가는가?" 확인하는데 쓰였음.
+- 두 번째로 많이 한 행동은 프롬프트 작성(21%):
+    - 심지어 프롬프트를 작성한 이유 중 가장 많은 것은 새기능 요청이 아니라 디버깅 요청임 (61%)^[결국 AI를 이용하여, AI가 만든 버그를 고치는 일을 하는것에 더 많은 시간을 쓰는 셈, 한마디로 바이브코딩이 아니라 바이브디버깅]
+- 실제 코드를 짜거나 들여다보고 고치는 데 쓴 시간은 거의 없었음. (7%)
+    - 이마저도 90.37%는 단순 코드 해석에 투자하였으며,
+    - 직접적인 코드 수정은 9.63%에 불과했음.^[당연한 이야기이긴 한데, 바이브코딩 환경이 학습자와 코드를 멀어지게 만드는 효과가 있음]
+
+## Francis Geng의 연구
+
+**발견2**: 초보자와 숙련자의 차이 (프롬프트 작성 능력의 차이)
+
+![Figure: 초보자와 숙련자의 프롬프트 차이](figs/Geng_prompt.png)
+
+## 왼쪽 길을 지지하는 사람들의 의견
+
+- AI시대 코딩에 필요한 역량을 요약하면 아래와 같음:
+    - 테스트 & 디버깅
+    - 풍부한 맥락의 프롬프팅: 기술적 정확성으로 문제를 설명하는 능력
+    - 코드 이해력: AI 결과물을 이해하는 기술
+
+- 쉽게 말하면, 코딩 할 줄 알아야 한다는 의미.
+
+## 데이터분석을 위한 파이썬 공부 (GPT이전)
+
+**파이썬**
+
+- 기본문법: 파이썬 자료형, 조건문, 반복문, 함수
+- 고급문법: 클래스, 상속, 데코레이터, 클로저, 콘텍스트 매니저, ABC, 예외처리
+- 개발도구: 모듈, 패키지
+- 데이터과학: 넘파이, 판다스
+- 시각화: matplotlib, seaborn, plotly
+- 머신러닝/딥러닝: scikit-learn, torch, tensorflow, huggingface
+
+**강의 소개**
+
+- 파이썬 프로그래밍: <https://guebin.github.io/PP2024/>
+- 데이터 시각화: <https://guebin.github.io/DV2023/>
+- 딥러닝: <https://guebin.github.io/DL2024/>, <https://guebin.github.io/MP2024/>
+- 머신러닝: <https://guebin.github.io/MP2023/>
+
+# 실습: 에이전틱 AI 워크플로우
+
+## 실습 환경
+
+`-` 무료로 따라할 수 있는 것
+
+- 웹 챗봇: ChatGPT, Claude, Gemini, Perplexity, 구글 AI 모드
+- Google Colab: `Explain error`, `toggle gemini` (코딩 + AI가 한 화면에)
+- Claude Artifacts, MCP 커넥터: 무료 플랜에서도 됨 (커스텀 커넥터는 무료 1개 제한)
+- Gemini CLI: 클로드코드의 무료 대안 (구글 계정, 하루 1,000회)^[원래 클로드코드는 유료라 실습이 어려운데, 제미나이를 이용하면 비슷하게 할 수 있습니다]
+
+`-` 강의에서 시연으로 대체하는 것 (유료)
+
+- Claude Code: Claude Pro / Max
+- 통합개발환경: Positron(무료) + Claude Code(유료), Cursor Pro
+
+## 실습 노트북
+
+`-` 실습 자료(노트북·데이터)는 <https://guebin.github.io/rda261002/> 에서 안내합니다. 아래 배지를 누르면 Google Colab에서 바로 열립니다.
+
+<a href="https://colab.research.google.com/github/guebin/rda261002/blob/main/hands-on.ipynb"><img src="https://colab.research.google.com/assets/colab-badge.svg" style="text-align: left"></a>
+
+1. 코딩테스트 -- 파이썬 개념 11개 + 문제 3개
+2. 코딩테스트의 위기 -- ChatGPT에게 풀려보기
+3. Perplexity를 무시할 수 없는 이유 (RAG)
+4. 틈새시장을 공략한 Cursor (IDE통합) -- 코랩으로 체험
+5. Claude의 반격1 (아티팩트)
+6. Claude의 반격2 (MCP)
+7. Claude의 반격3 (Claude Code) -- 압축해제, 파일정리, 점수정리, 자기소개서
+8. 구글의 반격 (노트북LM)
+9. 에이전틱 AI 워크플로우 (Positron + Claude Code)
+
+## Positron + Claude Code 설치
+
+- Positron: <https://positron.posit.co>
+- Claude Code: <https://code.claude.com/docs>
+
+**Positron 세팅: Extensions**
+
+- 기본 내장: Quarto, Jupyter, Ruff, Pyright, Shiny 등
+- 필수: Claude Code for VS Code
+- 선택: Codex, Material Icon Theme, 마음에 드는 컬러 테마(GitHub Theme 등), ...
+
+**에이전틱 AI 활용 환경 비교**
+
+- 터미널: Claude Code 등 CLI 기반 — 코드 컨텍스트 인식, 멀티파일 편집, MCP 지원
+- IDE(VS Forks): Positron, Cursor AI 등 — 터미널의 기능 + **이미지 붙여넣기 가능**
+
+## Step1: 프로젝트 폴더 만들기
+
+<iframe width="1000" height="563" src="https://www.youtube.com/embed/-602FJ-K544?enablejsapi=1" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen class="yt-video"></iframe>
+
+## Step2: Terminal 사용하기
+
+<iframe width="1000" height="563" src="https://www.youtube.com/embed/LPlOXfeTDPk?enablejsapi=1" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen class="yt-video"></iframe>
+
+## Step3: 클로드코드 켜보기
+
+<iframe width="1000" height="563" src="https://www.youtube.com/embed/hjfO6K5F3iQ?enablejsapi=1" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen class="yt-video"></iframe>
+
+## 예제1: 압축 해제
+
+<iframe width="1000" height="563" src="https://www.youtube.com/embed/VI4dC2qP0qg?enablejsapi=1" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen class="yt-video"></iframe>
+
+- 실습용 자료: <https://github.com/guebin/rda261002/blob/main/Downloads.zip>
+
+## 예제2: 파일 정리
+
+<iframe width="1000" height="563" src="https://www.youtube.com/embed/jES1Cpi5gU8?enablejsapi=1" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen class="yt-video"></iframe>
+
+## 예제3: 이미지파일 정리
+
+<iframe width="1000" height="563" src="https://www.youtube.com/embed/2g8GjLuPVRY?enablejsapi=1" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen class="yt-video"></iframe>
+
+## 예제4: 텍스트파일 정리
+
+<iframe width="1000" height="563" src="https://www.youtube.com/embed/jFf3zH1FC4s?enablejsapi=1" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen class="yt-video"></iframe>
+
+## 예제5: 데이터 정리 및 시각화
+
+<iframe width="1000" height="563" src="https://www.youtube.com/embed/7UIq0tIRQ_M?enablejsapi=1" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen class="yt-video"></iframe>
+
+## 예제6: 간단한 이미지 처리
+
+<iframe width="1000" height="563" src="https://www.youtube.com/embed/_5vokyBNQY4?enablejsapi=1" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen class="yt-video"></iframe>
+
+## 예제7: 대시보드 (Shiny)
+
+<iframe width="1000" height="563" src="https://www.youtube.com/embed/vWkbSP2tE2U?enablejsapi=1" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen class="yt-video"></iframe>
+
+## 예제8: 파이썬에서 활용
+
+<iframe width="1000" height="563" src="https://www.youtube.com/embed/qJwNWAgb6u8?enablejsapi=1" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen class="yt-video"></iframe>
+
+## 기타 응용예제: 프로젝트 페이지 & 패키지 배포
+
+- 프로젝트 페이지
+    - <https://guebin.github.io/cascam-results/>
+    - <https://guebin.github.io/non-euclidean-models-for-fraud-detection/>
+- 패키지 배포
+    - <https://github.com/guebin/cascam>
+
+# 마무리하며
+
+## 에이전틱AI를 써야하는 이유?
+
+`-` 사실 설득하기 꽤 어려움.
+
+- 그냥 ChatGPT 쓰면 안돼?
+- 코딩 안 하는 사람도 써야해? 개발자들이나 쓰는 것 아니야?
+- 개념이 뭔데???
+
+## 에이전틱AI를 써야하는 이유?
+
+`-` 사건: 제 연구실에 있던 정수기에서 물이 샜습니다.
+
+::: {.panel-tabset}
+
+#### 대화1
+![.](figs/정수기1.png){height="1000px"}
+
+#### 대화2
+![.](figs/정수기2.png){height="1000px"}
+
+#### 대화3
+![.](figs/정수기3.png){height="1000px"}
+
+#### 대화4
+![.](figs/정수기4.png){height="1000px"}
+
+:::
+
+## 그래서 결론이 뭐냐고요?
+
+- 오른쪽길: 가장 인기 있는 새로운 프로그래밍 언어는 영어임. 코딩 배울 필요 없음.
+- 왼쪽길: 아직 시기상조임.
+- 제 의견: 중립기어^[사실 이럴 때 늘 제가 하는 말이 있죠.. 둘 다 잘해야 한다고]
+
+> 왼쪽길과 오른쪽길의 공통점: 최근 LLM 기술의 동향을 파악하는 것이 매우 중요. ChatGPT에게는 답을 물어볼 수 있고, Claude Code에게는 일을 시킬 수 있다.
+
+## 키워드
+
+`-` 중점 학습 포인트
+
+- **생성형 AI vs 에이전틱 AI** — 묻는 도구와 일을 시키는 도구
+- **RAG**(검색 증강 생성) — 외부 문서를 찾아 근거로 답한다 (Perplexity, NotebookLM)
+- **바이브코딩 → 에이전틱 엔지니어링** — 결과만 보고 고치기에서, 명세·검토·테스트로
+- **MCP** — AI와 외부 도구를 잇는 표준, 2025년 12월 리눅스재단으로
+- **에이전틱 코딩** — Claude Code · Codex · Gemini CLI, 계획부터 디버깅까지 AI가 주도
+- **멀티에이전트** — 에이전트 한 명에서 팀으로
+- **검증과 보안** — 환각, 내부자료 업로드, 권한 확인
+- **왼쪽 길 · 오른쪽 길** — 그래도 코딩을 배울 것인가
+
+## 참고자료 (이전 발표)
+
+- Chat GPT를 이용한 파이썬 실무 (농촌진흥청, 2025.10): <https://github.com/guebin/rda251022>
+- ChatGPT시대의 코딩공부 (JBIG, 2025.12): <https://github.com/miruetoto/JBIG-20251201>
+- 통계 연구자를 위한 에이전틱 AI 활용법 (다중척도 워크샵, 2026.02): <https://github.com/miruetoto/agentic-260224>
+- 에이전틱 AI 워크플로우 실습 (충남대 DS세미나, 2026.03): <https://github.com/miruetoto/cnu-260330>
+- Vibe Coding for Researchers (인공지능 춘계 단기강좌, 2026.05): <https://github.com/guebin/aia260529>
+
+## Reference
+
+```{=html}
+<script>
+// YouTube iframe API 로드
+var tag = document.createElement('script');
+tag.src = "https://www.youtube.com/iframe_api";
+var firstScriptTag = document.getElementsByTagName('script')[0];
+firstScriptTag.parentNode.insertBefore(tag, firstScriptTag);
+
+var players = {};
+var activePlayer = null;
+var playersReady = false;
+
+// YouTube API 준비 완료 시 호출되는 함수
+function onYouTubeIframeAPIReady() {
+  const iframes = document.querySelectorAll('iframe.yt-video');
+
+  iframes.forEach((iframe, index) => {
+    const videoId = 'yt-player-' + index;
+    iframe.id = videoId;
+
+    players[videoId] = new YT.Player(videoId, {
+      events: {
+        'onReady': function(event) {
+          // 2배속 설정
+          event.target.setPlaybackRate(2.0);
+        }
+      }
+    });
+
+    // 클릭 이벤트 추가
+    iframe.addEventListener('click', function(e) {
+      if (activePlayer && activePlayer !== videoId) {
+        document.getElementById(activePlayer).classList.remove('video-active');
+      }
+      iframe.classList.add('video-active');
+      activePlayer = videoId;
+      e.stopPropagation();
+    });
+  });
+
+  playersReady = true;
+}
+
+// 키보드 이벤트 처리
+document.addEventListener('DOMContentLoaded', function() {
+  // HTML5 video 태그 처리
+  const videos = document.querySelectorAll('video');
+  let activeVideo = null;
+
+  videos.forEach(video => {
+    video.playbackRate = 2.0;
+
+    video.addEventListener('click', function(e) {
+      if (activeVideo && activeVideo !== this) {
+        activeVideo.classList.remove('video-active');
+      }
+      this.classList.add('video-active');
+      activeVideo = this;
+      e.stopPropagation();
+    });
+  });
+
+  // 키보드 단축키
+  document.addEventListener('keydown', function(e) {
+    if (e.key === ' ' || e.keyCode === 32) {
+      e.preventDefault();
+      e.stopPropagation();
+      e.stopImmediatePropagation();
+
+      // YouTube 플레이어가 활성화된 경우
+      if (activePlayer && players[activePlayer]) {
+        const player = players[activePlayer];
+        const state = player.getPlayerState();
+        if (state === YT.PlayerState.PLAYING) {
+          player.pauseVideo();
+        } else {
+          player.playVideo();
+        }
+      }
+      // HTML5 video가 활성화된 경우
+      else if (activeVideo) {
+        if (activeVideo.paused) {
+          activeVideo.play();
+        } else {
+          activeVideo.pause();
+        }
+      }
+      return false;
+    }
+
+    // 활성화된 플레이어나 비디오가 없으면 무시
+    if (!activePlayer && !activeVideo) return;
+
+    let handled = false;
+
+    switch(e.key) {
+      case '1':
+        // 1: 2초 뒤로
+        if (activePlayer && players[activePlayer]) {
+          const player = players[activePlayer];
+          const currentTime = player.getCurrentTime();
+          player.seekTo(Math.max(0, currentTime - 2), true);
+          handled = true;
+        } else if (activeVideo) {
+          activeVideo.currentTime = Math.max(0, activeVideo.currentTime - 2);
+          handled = true;
+        }
+        break;
+      case '3':
+        // 3: 2초 앞으로
+        if (activePlayer && players[activePlayer]) {
+          const player = players[activePlayer];
+          const currentTime = player.getCurrentTime();
+          const duration = player.getDuration();
+          player.seekTo(Math.min(duration, currentTime + 2), true);
+          handled = true;
+        } else if (activeVideo) {
+          activeVideo.currentTime = Math.min(activeVideo.duration, activeVideo.currentTime + 2);
+          handled = true;
+        }
+        break;
+      case '2':
+        // 2: 재생/일시정지
+        if (activePlayer && players[activePlayer]) {
+          const player = players[activePlayer];
+          const state = player.getPlayerState();
+          if (state === YT.PlayerState.PLAYING) {
+            player.pauseVideo();
+          } else {
+            player.playVideo();
+          }
+          handled = true;
+        } else if (activeVideo) {
+          if (activeVideo.paused) {
+            activeVideo.play();
+          } else {
+            activeVideo.pause();
+          }
+          handled = true;
+        }
+        break;
+      case 'ArrowUp':
+      case 'ArrowDown':
+      case 'ArrowLeft':
+      case 'ArrowRight':
+      case 'PageUp':
+      case 'PageDown':
+        // 비디오 활성화시 페이지 스크롤 키 차단
+        e.preventDefault();
+        e.stopPropagation();
+        e.stopImmediatePropagation();
+        return false;
+    }
+
+    if (handled) {
+      e.preventDefault();
+      e.stopPropagation();
+      e.stopImmediatePropagation();
+      return false;
+    }
+  }, true);
+
+  // 문서 클릭시 비활성화
+  document.addEventListener('click', function(e) {
+    if (activeVideo && !e.target.closest('video')) {
+      activeVideo.classList.remove('video-active');
+      activeVideo = null;
+    }
+    if (activePlayer && !e.target.closest('iframe.yt-video')) {
+      document.getElementById(activePlayer).classList.remove('video-active');
+      activePlayer = null;
+    }
+  });
+});
+</script>
+<style>
+video.video-active,
+iframe.video-active {
+  outline: 3px solid #4A90E2;
+  outline-offset: 2px;
+  box-shadow: 0 0 10px rgba(74, 144, 226, 0.5);
+}
+</style>
+```
